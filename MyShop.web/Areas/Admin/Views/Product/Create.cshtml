@@ -1,0 +1,67 @@
+﻿@model ProductsViewModel
+@{
+    ViewBag.PageTitle = "Products Mangment";
+    ViewBag.CardTitle = "Create Products";
+    Layout = "~/Views/Shared/_Dashbord.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-md-6 col-lg-4">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="Product.Image" class="form-label"></label>
+                <input type="file" asp-for="Product.Image" class="form-control" id="imagfile" name="file" onchange="fillimage(event);" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Name" class="form-label"></label>
+                <input type="text" asp-for="Product.Name" class="form-control" />
+                <span asp-validation-for="Product.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Description" class="form-label"></label>
+                <textarea type="text" asp-for="Product.Description" id="mytextarea"  class="form-control"></textarea>
+                <span asp-validation-for="Product.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Price" class="form-label"></label>
+                <input type="text" asp-for="Product.Price" class="form-control" />
+                <span asp-validation-for="Product.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+ 
+                <label asp-for="Product.CategoryId" class="control-label">Category Name</label>
+                <select class="form-control" asp-for="Product.CategoryId" id="Select" asp-items="Model.CategoryList">
+                    <option selected disabled>SelectCategory...!</option>
+                </select>
+                <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group pt-3 pb-1">
+                <input type="submit" class="btn btn-primary" value="Create" />
+            </div>
+        </form>
+
+    </div>
+    <div class="col-md-4 col-lg-4">
+        <div class="container">
+
+            <img src="~/@Model.Product.Image" width="300px" height="400px" id="ImagePrevew" />
+        </div>
+
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to list</a>
+</div>
+
+@section Scripts {
+    <partial src="Views/_ValidationScriptsPartial"></partial>
+       
+  <script>
+        var fillimage = function (event) {
+          var imageholder = document.getElementById("ImagePrevew");
+          imageholder.src = URL.createObjectURL(event.target.files[0]);
+      }
+  </script>
+}

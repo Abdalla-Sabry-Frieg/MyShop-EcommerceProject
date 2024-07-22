@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyShop-DataAccess", "MyShop-DataAccess\MyShop-DataAccess.csproj", "{B6B5BB43-DAE8-4C48-8549-60444C2DACC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyShop-DataAccess", "MyShop-DataAccess\MyShop-DataAccess.csproj", "{B6B5BB43-DAE8-4C48-8549-60444C2DACC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyShop-Entities", "MyShop-Entities\MyShop-Entities.csproj", "{E77E51AB-5370-4B87-8E8A-5860695EE7C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyShop-Entities", "MyShop-Entities\MyShop-Entities.csproj", "{E77E51AB-5370-4B87-8E8A-5860695EE7C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyShop.web", "MyShop.web\MyShop.web.csproj", "{15AB6292-F4C6-4C7B-8689-A66F4D9EBC12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyShop.web", "MyShop.web\MyShop.web.csproj", "{15AB6292-F4C6-4C7B-8689-A66F4D9EBC12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

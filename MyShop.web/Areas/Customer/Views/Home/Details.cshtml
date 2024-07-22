@@ -1,0 +1,32 @@
+﻿@model ShoppingCart
+
+
+<form asp-action="Details" method="post" enctype="multipart/form-data">  
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center" >
+            <input asp-for="@Model.ProductId" hidden />
+            <div class="col-md-6">
+                <img  src="~/@Model.Product.Image" width="500px" height="600px" />
+            </div>
+            <div class="col-md-6">
+                <div class="small mb-1">@Model.Product.Category.Name </div>
+                <h1 class="fw-bolder display-5 ">Shop Item templat</h1>
+           
+            <div>
+               <span>@Model.Product.Price.ToString("C")</span>
+            </div>
+            <p class="lead">@Model.Product.Description</p>
+        
+          <div class="d-flex py-5">
+            <input class="form-control text-center me-3" id="quantity" asp-for="@Model.Count" style="max-width:20%"/>
+            <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+                <i class="bi-cart-fill me-1"></i>
+                Add to cart
+            </button>
+           </div>
+        </div>
+        </div>
+    </div>
+</section>
+</form>

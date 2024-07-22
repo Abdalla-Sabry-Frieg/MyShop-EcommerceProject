@@ -1,0 +1,7 @@
+publish :
+	
+
+pk_test_51PPpDQC0VYROiEVwMWrkWez41X7RSZ81n4gY2HhVKR1ZnqtPzwxkev9a6p9zOWuJw3pUkZC5Qf4mIwUhHA3xWjsg00etmGPrn9
+
+security :
+sk_test_51PPpDQC0VYROiEVwnmv7orsuAY2fxhdAuj4SPsrz9rspxUgtc121JLvSnVdlbjxeNyHk08ebmCK7ZdJm6KcT0hPW00u8ELfAFS

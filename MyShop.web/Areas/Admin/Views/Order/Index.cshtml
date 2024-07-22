@@ -1,0 +1,51 @@
+﻿@model OrderViewModel
+@{
+    ViewBag.PageTitle = "Order Mangment";
+    ViewBag.CardTitle = "View Orders";
+    Layout = "~/Views/Shared/_Dashbord.cshtml";
+}
+
+
+@* <partial name="/Views/Shared/_Toster.cshtml"/> will set toster at all CRUD at dashboard body*@
+
+<table id="myTable" class="table table-hover text-center" width="100%">
+    <thead>
+        <tr class="text-center">
+            <td>Id</td>
+            <td>Name</td>
+            <td>Phone Number</td>
+            <td>Email</td>
+            <td>Order Status</td>
+            <td>Order Address</td>
+            <td>Order Price</td>
+            <td>Actions</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.orders)
+        {
+            <tr class="text-center">
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Email</td>
+                <td>@item.OrderStatus</td>
+                <td>@item.Address</td>
+                <td>@item.TotalPrice</td>
+               
+              
+                <td>
+                    <a class="btn btn-success" asp-route-orderId="@item.Id" asp-action="Details" asp-controller="Order">Details</a>
+
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+
+@section Scripts {
+    <script src="~/Models/Ordes.js"></script>
+}

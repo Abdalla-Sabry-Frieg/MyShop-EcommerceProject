@@ -1,0 +1,268 @@
+﻿@model OrderViewModel
+@using MyShop_Entities.Helper
+@{
+    ViewBag.PageTitle = "Order Mangment";
+    ViewBag.CardTitle = "Order Details";
+    Layout = "~/Views/Shared/_Dashbord.cshtml";
+}
+
+
+    <style>
+      /*   body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            width: 100%;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+
+        .pickup-details, .order-summary {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        } */
+
+         /*    .pickup-details h2, .order-summary h2 {
+                margin-top: 0;
+            }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 10px;
+        }
+
+        input {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        } */
+
+        button {
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+       /*  .order-summary {
+            width: 300px;
+        }
+
+        .order-status {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        } */
+
+      /*   table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+ */
+        .total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+        }
+    </style>
+
+<form method="post" asp-action="updateOrderDetails">
+      
+   
+    <div class="container">
+
+         <div class="row">
+                <div class="col-8">
+                    <div class="pickup-details">
+                        <h2>PickUp Details</h2>
+                    <input asp-for="Order.Id" type="hidden" />
+                        <div class="form-group">
+                           <label class="form-label" asp-for="@Model.Order.Name" for="name">Name</label>
+                            <input class="form-control" asp-for="@Model.Order.Name" type="text" id="name" >
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"  asp-for="@Model.Order.PhoneNumber" for="phone">Phone</label>
+                        <input class="form-control" asp-for="@Model.Order.PhoneNumber" type="text" id="phone" >
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"  asp-for="@Model.Order.Address" for="address">Address</label>
+                            <input class="form-control"  asp-for="@Model.Order.Address" type="text" id="address" >
+                        </div>
+                        <div class="form-group">
+                        <label class="form-label" asp-for="@Model.Order.City" for="city">City</label>
+                        <input class="form-control" asp-for="@Model.Order.City" type="text" id="city" >
+                        </div>
+
+                       <div class="form-group">
+                        <label class="form-label" asp-for="@Model.Order.Email" for="email">Email</label>
+                            <input class="form-control" readonly asp-for="@Model.Order.Email" type="email" id="email" >
+                        </div>
+                        <div class="form-group">
+                        <label class="form-label" asp-for="@Model.Order.OrderDate" >Order Date</label>
+                        <input class="form-control" readonly asp-for="@Model.Order.OrderDate" type="date" id="order-date" >
+                        </div>
+                    
+                        <div class="form-group">
+                        <label class="form-label" id="Carrir" asp-for="@Model.Order.Carrier" >Carrier</label>
+                        <input class="form-control" asp-for="@Model.Order.Carrier" type="text" id="Carrir">
+                        <span class="text-danger" asp-validation-for="@Model.Order.Carrier"></span>
+                        </div>
+                   
+                        <div class="form-group">
+                        <label class="form-label" asp-for="@Model.Order.TrackingNumber" id="tracking" >Tracking Number</label>
+                        <input class="form-control" asp-for="@Model.Order.TrackingNumber" type="text" id="tracking">
+                        <span class="text-danger" asp-validation-for="@Model.Order.TrackingNumber"></span>
+                        </div>
+                   
+                        <div class="form-group">
+                        <label class="form-label" asp-for="@Model.Order.ShippingDate" for="shipping-date">Shipping Date</label>
+                            <input class="form-control" type="date"  asp-for="@Model.Order.ShippingDate" id="shipping-date" />
+                        </div>
+                   
+                        <div class="form-group">
+                            <label class="form-label" for="session-id">Session ID</label>
+                        <input class="form-control" readonly asp-for="@Model.Order.SessionId" type="text" id="session-id" >
+                        </div>
+                    
+                        <div class="form-group">
+                            <label class="form-label" for="payment-intent-id">Payment Intent ID</label>
+                        <input type="text" class="form-control" readonly id="payment-intent-id" asp-for="@Model.Order.PaymentIntentId" >
+                        </div>
+                    
+                        <div class="form-group">
+                            <label class="form-label" for="payment-date">Payment Date</label>
+                            <input class="form-control"  asp-for="@Model.Order.PaymentDate" type="date" id="payment-date" >
+                        </div>
+                    
+                        <div class="form-group">
+                            <label class="form-label" for="payment-status">Payment Status</label>
+                        <input class="form-control" readonly asp-for="@Model.Order.PaymentStatus" type="text" id="payment-status" />
+                        </div>
+
+
+                    <input class="btn btn-primary" asp-action="updateOrderDetails" type="submit" value="Update Pickup Details">
+
+                    </div>
+                </div>
+               
+                <div class="col-4">
+                    <div class="order-summary "> 
+                        <h2 class="text-center">Order Summary</h2>
+                        <div class="container text-center">
+                            <div class="btn btn-outline-primary text-center mb-2 mt-2 col-12">Order Status - @Model.Order.OrderStatus</div>
+                        </div>
+                        <ul class="list-group mb-3">
+                            @foreach (var item in Model.OrderDetails)
+                            {
+                                <li class="list-group-item d-flex justify-content-between p-2">
+                                    <div class="row container">
+                                        <div class="col-8">
+                                            <h6 class="my-0 text-primary">@item.Product.Name</h6>
+                                            <small class="text-muted">Price : @item.Product.Price</small>
+                                            <br />
+                                            <small class="text-muted">Quantitiy : @item.Count</small>
+                                        </div>
+                                        <div class="col-4 text-end me-1">
+                                            <p class="text-success">@((item.Count * item.Price).ToString("c"))</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+
+                        </ul>
+                    <ul class="list-group mb-3">
+                        <div class="total">
+                            <div>Total :</div>
+                            <div class="text-success">@Model.Order.TotalPrice.ToString("C")</div>
+                        </div>
+                      
+                    </ul>
+                   <div class="d-flex justify-content-between">
+
+                       @if(Model.Order.OrderStatus == Helpers.Approve)
+                       {
+                            <input class="btn btn-primary" asp-action="StartProcess" type="submit" value="Start Proccess" />
+                       }
+                        @if (Model.Order.OrderStatus == Helpers.Procceing)
+                        {
+                            <input class="btn btn-success" onclick="return CheckData()" asp-action="StartShip" type="submit" value="Start Shipping" />
+                        }
+                        @if (Model.Order.OrderStatus != Helpers.Canceled || Model.Order.OrderStatus != Helpers.Refund)
+                        {
+                            <input class="btn btn-danger" type="submit" asp-action="CancelOrder" value="Cancel Order" />
+                        }
+
+                       
+                   </div>
+                   
+                </div>
+              
+         </div>
+      
+    </div>
+  </form>
+
+@section Scripts{
+    <script>
+        function CheckData()
+        {
+            if(document.getElementById("Carrir").value == '')
+            {
+                swal.fire({
+                   
+                        title: "This is an error",
+                        text: "Enter Carrir please!",
+                        icon: "error",
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                    }); 
+                    return false;
+            }
+            if (document.getElementById("tracking").value === '') {
+
+                Swal.fire({
+                    title: "This is an error",
+                    text: "Enter tracking number please!",
+                    icon: "error",
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                });
+                return false;
+            }
+            return true;
+        }
+       
+
+        
+    </script>
+}

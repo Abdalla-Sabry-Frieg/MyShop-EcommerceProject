@@ -1,0 +1,52 @@
+﻿@model ProductsViewModel
+@{
+    ViewBag.PageTitle = "Product Mangment";
+    ViewBag.CardTitle = "View Products";
+    Layout = "~/Views/Shared/_Dashbord.cshtml";
+}
+
+
+@* <partial name="/Views/Shared/_Toster.cshtml"/> will set toster at all CRUD at dashboard body*@
+
+<div>
+    <a class="btn btn-primary" asp-action="create">create</a>
+</div>
+<hr />
+<table id="myTable" class="table table-hover text-center" width="100%">
+    <thead>
+        <tr class="text-center">
+            <td style="width:5%">image</td>
+            <td style="width:15%">Name</td>
+            <td style="width:25%">Description</td>
+            <td>Price</td>
+            <td>Category Name</td>
+            <td>Time Created</td>
+            <td>Actions</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.products)
+        {
+            <tr class="text-center">
+                <td><img src="~/@item.Image" style="height:35px ; width:35px; " /></td>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.Price.ToString("c")</td>
+                <td>@item.Category.Name</td>
+                <td>@item.CreatedAt</td>
+                <td>
+                    <a class="btn btn-success" asp-route-id="@item.Id" asp-action="Edit" asp-asp-controller="product">Edit</a>
+                    <a class="btn btn-danger" onclick="Delete('@item.Id')" asp-route-id="@item.Id" asp-action="DeleteProduct" asp-asp-controller="product">Delete</a>
+
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+
+@section Scripts{
+    <script src="~/Models/Products.js"></script>
+}

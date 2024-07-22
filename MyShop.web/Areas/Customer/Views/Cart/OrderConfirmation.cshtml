@@ -1,0 +1,29 @@
+﻿@model int
+@{
+    ViewData["Title"] = "OrderConfirmation";
+    Layout = "~/Views/Shared/_Customer.cshtml";
+}
+
+
+<div class="container m-5">
+
+   <div class="row">
+        <div class="col-12 text-center">
+            <h1>Order Confirmation</h1>
+            <br />
+            <img src="~/img/images.jpg" style="width:700px; height:300px;" />
+        </div>
+
+        <div class="col-12 text-center">
+            <br />
+            <hr />
+            <h1>Order Confirmation Details</h1>
+            <br />
+            <br />
+            <h3>Your order is success with number is {@Model}  has beeb added</h3>
+        </div>
+   </div>
+ 
+
+</div>
+

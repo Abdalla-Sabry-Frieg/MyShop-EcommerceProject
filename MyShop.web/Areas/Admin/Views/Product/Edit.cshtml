@@ -1,0 +1,63 @@
+﻿@model ProductsViewModel
+@{ 
+    ViewBag.PageTitle = "Products Mangment";
+    ViewBag.CardTitle = "Edit Products";
+    Layout = "~/Views/Shared/_Dashbord.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-md-4 col-lg-4">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <input hidden asp-for="Product.Id" />
+            <input hidden asp-for="Product.Image" />
+            <div class="form-group">
+                <label asp-for="Product.Image" class="form-label"></label>
+                <input type="file" asp-for="Product.Image" class="form-control" id="imagfile" name="file" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Name" class="form-label"></label>
+                <input type="text" asp-for="Product.Name" class="form-control" />
+                <span asp-validation-for="Product.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Description" class="form-label"></label>
+                <input type="text" asp-for="Product.Description" class="form-control" />
+                <span asp-validation-for="Product.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Price" class="form-label"></label>
+                <input type="text" asp-for="Product.Price" class="form-control" />
+                <span asp-validation-for="Product.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+
+                <label asp-for="Product.CategoryId" class="control-label">Category Name</label>
+                <select class="form-control" asp-for="Product.CategoryId" id="Select" asp-items="Model.CategoryList">
+                    <option selected disabled>SelectCategory...!</option>
+                </select>
+                <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group pt-3 pb-1">
+                <input type="submit" class="btn btn-primary" value="Edit" />
+            </div>
+        </form>
+
+    </div>
+    <div class="col-md-4 col-lg-4">
+        <div class="container">
+
+             <img src="~/@Model.Product.Image" width="300px" height="400px"/>
+        </div>
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to list</a>
+</div>
+
+@section Scripts {
+    <partial src="Views/_ValidationScriptsPartial"></partial>
+}
