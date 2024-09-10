@@ -45,12 +45,15 @@ namespace MyShop.web.Areas.Customer.Controllers
         public IActionResult plus(int cartid)
         {
             var cart = _unitOfWork.ShoppingCart.GetFirstOrDefualt(x => x.Id == cartid);
-            _unitOfWork.ShoppingCart.InceaseCount(cart, 1);
-            _unitOfWork.Complet();
+            
+            if(cart!= null)
+            {
+                _unitOfWork.ShoppingCart.InceaseCount(cart, 1);
+                _unitOfWork.Complet();
 
-            var count = _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == cart.ApplicationUserId).ToList().Count() +1;
-            HttpContext.Session.SetInt32(Helpers.SessionKey, count);
-
+                var count = _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == cart.ApplicationUserId).Sum(x=>x.Count);
+                HttpContext.Session.SetInt32(Helpers.SessionKey, count);
+            }
 
             return RedirectToAction("Index");
              
@@ -64,7 +67,7 @@ namespace MyShop.web.Areas.Customer.Controllers
                 _unitOfWork.ShoppingCart.Delete(cart);
                 _unitOfWork.Complet();
                 // و انا بحذف واحد م العناصر انزل من قيمه العناصر بتاعه اليوزر دا بمقدار واحد
-                var count = _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == cart.ApplicationUserId).ToList().Count() - 1;
+                var count = _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == cart.ApplicationUserId).Sum(x=>x.Count);
                 HttpContext.Session.SetInt32(Helpers.SessionKey, count);
 
             }
@@ -73,10 +76,10 @@ namespace MyShop.web.Areas.Customer.Controllers
                 _unitOfWork.ShoppingCart.DeceaseCount(cart, 1);
                 _unitOfWork.Complet();
                 // و انا بحذف واحد م العناصر انزل من قيمه العناصر بتاعه اليوزر دا بمقدار واحد
-                var count = _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == cart.ApplicationUserId).ToList().Count() - 1;
+                var count = _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == cart.ApplicationUserId).Sum(x => x.Count);
                 HttpContext.Session.SetInt32(Helpers.SessionKey, count);
             }
-          ;
+          
             return RedirectToAction("Index");
 
 

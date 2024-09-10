@@ -32,7 +32,7 @@ namespace MyShop.web.ViewComponunts
                 {
                     HttpContext.Session.SetInt32(Helpers.SessionKey, _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == claim.Value).ToList().Count());
                     return View(HttpContext.Session.GetInt32(Helpers.SessionKey));
-
+                    
                 }
 
             }

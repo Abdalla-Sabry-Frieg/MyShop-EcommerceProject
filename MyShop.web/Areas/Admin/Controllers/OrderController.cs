@@ -26,11 +26,15 @@ namespace MyShop.web.Areas.Admin.Controllers
             var claimasIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimasIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
+            var orders = _unitOfWork.Order.GetAll(includeWord: "ApplicationUser")
+                              .OrderByDescending(o => o.OrderDate) // Sort orders by OrderDate in descending order
+                              .ToList();
+
             var order = new OrderViewModel()
             {
                 Order = new Order(),
                 CardList = _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == claim.Value, includeWord: "Product"),
-                orders = _unitOfWork.Order.GetAll(includeWord: "ApplicationUser").ToList()
+                orders = orders
 
             };
             // to calculate the total price
@@ -157,5 +161,18 @@ namespace MyShop.web.Areas.Admin.Controllers
 
 
         }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public IActionResult deleteOrder(int id)
+        {
+            var order = _unitOfWork.Order.GetFirstOrDefualt(x => x.Id == id);
+            _unitOfWork.Order.Delete(order);
+            _unitOfWork.Complet();
+
+            return RedirectToAction("index");
+            
+        }
+
     }
 }

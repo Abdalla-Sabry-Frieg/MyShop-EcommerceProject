@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "allProducts";
+}
+
+<style>
+    /* Card hover animation */
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Product image animation */
+    .card-img-top {
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover .card-img-top {
+        transform: scale(1.05);
+    }
+</style>
+
+<div class="text-center bg-secondery rounded-3">
+   
+</div>
+<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center my-5 m-3 rounded-5" style="background-color:#eaf1f1;">
+    @foreach (var product in Model)
+    {
+        <div class="col mb-5">
+            <div class="card h-100 mt-5 mb-5">
+                <!-- Product image-->
+                <a href="/Customer/Home/Details/@product.Id">
+                    <img class="img-fluid" src="~/@product.Image" width="450px" height="300px" alt="@product.Name" />
+                </a>
+                <!-- Product details-->
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <!-- Product name-->
+                        <h5 class="fw-bolder">@product.Name</h5>
+                        <!-- Product price-->
+                        @product.Price.ToString("C")
+                    </div>
+                    <div class="text-center m-3" >
+                        <strong>@product.Description</strong>
+                    </div>
+
+                </div>
+                <!-- Product actions-->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center">
+                        <a class="btn btn-outline-dark mt-auto" href="/Customer/Home/Details/@product.Id">
+                            Product Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+    
+</div>
+
+<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+    <div class="text-center">
+        <a class="btn btn-outline-dark mt-auto" href="/Customer/Home/Index">
+            Go to home page
+        </a>
+    </div>
+</div>
+

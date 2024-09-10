@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using MyShop_DataAccess.Data;
 using MyShop_Entities.Helper;
 using MyShop_Entities.Models;
@@ -10,11 +11,14 @@ namespace MyShop.web.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         private IUnitOfWork _unitOfWork;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CategoryController(IUnitOfWork unitOfWork)
+        public CategoryController(IUnitOfWork unitOfWork , IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
+
         public IActionResult Index()
         {
             var category = _unitOfWork.Categories.GetAll();
@@ -29,11 +33,26 @@ namespace MyShop.web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Category category)
+        public IActionResult Create(Category category , IFormFile file)
         {
-            Image(category);
+            
             if (ModelState.IsValid)
             {
+                string rootPath = _webHostEnvironment.WebRootPath; // mean wwwroot
+                if (file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString();
+                    var upload = Path.Combine(rootPath, @"Images\Category");
+                    var extension = Path.GetExtension(file.FileName);
+
+                    using (var filestream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
+                    {
+                        file.CopyTo(filestream);
+
+                    }
+                    category.Image= @"Images\Category\" + fileName + extension;
+                }
+
                 _unitOfWork.Categories.Add(category);
                 _unitOfWork.Complet();
                 TempData["Create"] = "Category has been deleted";
@@ -44,7 +63,7 @@ namespace MyShop.web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int id)
         {
             var category = _unitOfWork.Categories.GetFirstOrDefualt(x => x.Id == id);
             return View(category);
@@ -52,17 +71,45 @@ namespace MyShop.web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Category category)
+        public IActionResult Edit(Category category, IFormFile? file)
         {
-            Image(category);
             if (ModelState.IsValid)
             {
-                if (category.Id == null)
+                var categoryFromDb = _unitOfWork.Categories.GetFirstOrDefualt(x => x.Id == category.Id);
+                if (categoryFromDb == null)
                 {
                     return NotFound();
                 }
-                category.Image = category.Image;
-                _unitOfWork.Categories.Update(category);
+
+                string rootPath = _webHostEnvironment.WebRootPath; // mean wwwroot
+                if (file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString();
+                    var upload = Path.Combine(rootPath, @"Images\Category");
+                    var extension = Path.GetExtension(file.FileName);
+
+                    if (category.Image != null)
+                    {
+                        var oldImage = Path.Combine(rootPath, category.Image.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImage))
+                        {
+                            System.IO.File.Delete(oldImage);
+                        }
+
+                    }
+
+                    using (var filestream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
+                    {
+                        file.CopyTo(filestream);
+
+                    }
+                    category.Image = @"Images\Category\" + fileName + extension;
+                }
+
+                categoryFromDb.Name = category.Name;
+                categoryFromDb.Description = category.Description;
+
+                _unitOfWork.Categories.Update(categoryFromDb);
                 _unitOfWork.Complet();
                 TempData["Edit"] = "Category has been updated";
                 return RedirectToAction("Index");
@@ -70,6 +117,7 @@ namespace MyShop.web.Areas.Admin.Controllers
 
             return View(category);
         }
+
 
 
         [HttpGet]

@@ -11,7 +11,7 @@
     <div class="col-md-4 col-lg-4">
         <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <input hidden asp-for="Product.Id" />
-            <input hidden asp-for="Product.Image" />
+            <input hidden asp-for="Product.Image" />   
             <div class="form-group">
                 <label asp-for="Product.Image" class="form-label"></label>
                 <input type="file" asp-for="Product.Image" class="form-control" id="imagfile" name="file" />
